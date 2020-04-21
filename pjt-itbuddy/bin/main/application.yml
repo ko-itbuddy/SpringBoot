@@ -1,0 +1,130 @@
+
+#aws, dev, test 공통설정
+# spring.mvc.view.prefix: /resorces/tmplates/
+# spring.mvc.view.suffix: .html
+---
+
+
+server:
+    port: 8081
+
+spring:
+    datasource: #Datasource 설정
+        hikari:
+            pool-name: hikari-cp
+            minimum-idle: 2
+            connection-test-query: SELECT 123
+            connection-timeout: 30000
+            idle-timeout:  600000
+            max-lifetime: 1800000
+            data-source-properties:
+                cachePrepStmts: true
+                prepStmtCacheSize: 250
+                prepStmtCacheSqlLimit: 2048
+                useServerPrepStmts: true
+
+
+    http:
+        encoding: # 인코딩 설정
+            charset: UTF-8
+            enabled: true
+            force: true
+
+    servlet:
+        multipart: #파일 업로드
+            max-file-size: 30MB
+            max-request-size: 30MB
+            file-size-threshold: 10MB
+            enabled: true
+
+    thymeleaf: 
+        prefix: classpath:templates/ 
+        check-template: true
+        suffix: .html #파일 수정시 반영하려면 하면 재시작을 해줘야 한다. 브라우저 새로고침시 수정사항 반영을 취해 cache=false 설정(운영시 true) cache: false check-template-location: true
+        encoding: UTF-8
+        mode: HTML5
+        template-resolver-order: 0
+
+mybatis:
+  mapper-locations: classpath:/mybatis/**
+
+
+
+
+
+
+--- #aws 환경
+spring:
+    profiles:
+        active: aws 
+    datasource:
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        url: jdbc:log4jdbc:mariadb://localhost:3306/oauth2
+        username: security
+        password: security
+    thymeleaf: 
+        cache: true
+
+            
+logging:
+    file: logs/production_profile_app.log
+    pattern:
+        file: "%d %-5level [%thread] %logger{0} : %msg%n"
+    level:
+        jdbc.sqlonly: DEBUG
+        jdbc.sqltiming: DEBUG
+        org.springframework.web: WARN
+        guru.springframework.controllers: WARN
+        com.zaxxer.hikari.HikariDataSource: ERROR
+        com.zaxxer.hikari: DEBUG
+
+
+
+
+--- #dev
+spring:
+    profiles:
+        active: dev
+    datasource:
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        url: jdbc:log4jdbc:mariadb://localhost:3306/oauth
+        username: security
+        password: security
+
+
+
+    thymeleaf: 
+        cache: false
+logging:
+  pattern:
+    console: "%msg%n"
+  level:
+    jdbc.resultset: DEBUG
+    org.springframework.web: INFO
+    guru.springframework.controllers: INFO
+    com.zaxxer.hikari.HikariDataSource: ERROR
+
+
+
+--- #test
+spring:
+  profiles:
+      active: test
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mariadb://localhost:3306/oauth
+    username: security
+    password: security
+
+logging:
+  file: logs/dev_profile_app.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    jdbc.sqlonly: DEBUG
+    jdbc.sqltiming: DEBUG
+    org.springframework.web: DEBUG
+    guru.springframework.controllers: DEBUG
+    com.zaxxer.hikari.HikariDataSource: ERROR
+    
