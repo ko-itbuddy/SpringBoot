@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.web.access.AccessDeniedHandler;
-/*
+import org.springframework.security.web.access.AccessDeniedHandler;   /*
 * AccessDeniedHandler  처리
 */
 

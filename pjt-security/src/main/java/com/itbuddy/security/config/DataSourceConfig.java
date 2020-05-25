@@ -1,6 +1,5 @@
 package com.itbuddy.security.config;
 
-import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
