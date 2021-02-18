@@ -34,9 +34,9 @@ class OnlyTestJavaApplicationTests {
 
 		//스트림으로  sort
 		List<Item> sortedmapArrayList = mapArrayList
-											.stream()
-											.sorted(Comparator.comparing(Item::getKey))
-											.collect(Collectors.toCollection(ArrayList<Item>::new));
+						.stream()
+						.sorted(Comparator.comparing(Item::getKey))
+						.collect(Collectors.toCollection(ArrayList<Item>::new));
 
 		sortedmapArrayList.stream().forEach(System.out::println);
 
