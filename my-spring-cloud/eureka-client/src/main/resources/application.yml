@@ -1,0 +1,18 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: display # Eureka Server에 등록될 서비스 명
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30 # heartBeat interval (sec)
+  client:
+    register-with-eureka: true   # eureka server의 registry에 등록 할지 여부(eureka는 서버이면서 client가 될 수도 있음)
+    fetch-registry: true         # 서비스 리스트(registry) 정보를 가져올지 여부
+    registry-fetch-interval-seconds: 30 # 서버로부터 레지스트리 정보를 읽어와 로컬에 캐시하게 되는데 이때 registry fetch 간격 (초)
+    disable-delta: true          # registry 정보의 변경된 부분만 fetch 함.
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/,http://localhost:8763/eureka/
+  
