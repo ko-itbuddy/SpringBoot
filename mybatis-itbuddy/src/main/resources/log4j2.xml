@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+       <Property name="filePath">C:/seoyeon2/logs</Property>
+       <Property name="filename">rollingtest-$${sd:type}.log</Property>
+    </Properties>
+    
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p: %c - %m%n" />
+            <ThresholdFilter level="DEBUG"/>
+        </Console> 
+    </Appenders>
+    
+    
+    <Loggers>
+        <Logger name="com" additivity="false">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="logFile" />
+        </Logger>
+        <Logger name="jdbc.sqlonly" level="off" />
+        <Logger name="jdbc.sqltiming" level="debug" />
+        <Logger name="jdbc.audit" level="off" />
+        <Logger name="jdbc.resultset" level="off" />
+        <Logger name="jdbc.resultsettable" level="off" />
+        <Logger name="jdbc.connection" level="debug" />
+        <Root level="INFO">
+            <AppenderRef ref="debug" />
+        </Root>
+    </Loggers>
+</Configuration>
